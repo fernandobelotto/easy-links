@@ -1,14 +1,20 @@
-import { ChakraProvider } from '@chakra-ui/react'
+import { Box, ChakraProvider, Container } from "@chakra-ui/react";
+import { AppProps } from "next/app";
+import { Provider } from "react-redux";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import store from "../store";
 
-import theme from '../theme'
-import { AppProps } from 'next/app'
+export default function MyApp({ Component, pageProps }: AppProps) {
+  const persistor = persistStore(store);
 
-function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ChakraProvider resetCSS theme={theme}>
-      <Component {...pageProps} />
-    </ChakraProvider>
-  )
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <ChakraProvider>
+          <Component {...pageProps} />
+        </ChakraProvider>
+      </PersistGate>
+    </Provider>
+  );
 }
-
-export default MyApp

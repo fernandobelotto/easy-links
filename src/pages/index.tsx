@@ -1,56 +1,48 @@
+import { ChevronDownIcon } from "@chakra-ui/icons";
 import {
-  Link as ChakraLink,
-  Text,
-  Code,
-  List,
-  ListIcon,
-  ListItem,
-} from '@chakra-ui/react'
-import { CheckCircleIcon, LinkIcon } from '@chakra-ui/icons'
+  Box,
+  Button,
+  Heading,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  SimpleGrid,
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { Container } from "../components/Container";
+import { DarkModeSwitch } from "../components/DarkModeSwitch";
+import NewLinkModal from "../components/NewLinkModal";
+import { useAppDispatch, useAppSelector } from "../store";
+import { LinkCard } from "./LinkCard";
 
-import { Hero } from '../components/Hero'
-import { Container } from '../components/Container'
-import { Main } from '../components/Main'
-import { DarkModeSwitch } from '../components/DarkModeSwitch'
-import { CTA } from '../components/CTA'
-import { Footer } from '../components/Footer'
+const Index = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
-const Index = () => (
-  <Container height="100vh">
-    <Hero />
-    <Main>
-      <Text>
-        Example repository of <Code>Next.js</Code> + <Code>chakra-ui</Code> +{' '}
-        <Code>TypeScript</Code>.
-      </Text>
+  const { links } = useAppSelector((state) => state.links);
+  const dispatch = useAppDispatch();
 
-      <List spacing={3} my={0}>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink
-            isExternal
-            href="https://chakra-ui.com"
-            flexGrow={1}
-            mr={2}
-          >
-            Chakra UI <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-        <ListItem>
-          <ListIcon as={CheckCircleIcon} color="green.500" />
-          <ChakraLink isExternal href="https://nextjs.org" flexGrow={1} mr={2}>
-            Next.js <LinkIcon />
-          </ChakraLink>
-        </ListItem>
-      </List>
-    </Main>
+  return (
+    <>
+      <Box p="5">
+        <Heading mb="5">Links</Heading>
+        <SimpleGrid columns={12} spacing="5">
+          {links.map((link) => {
+            return (
+              <>
+                <LinkCard link={link}></LinkCard>
+              </>
+            );
+          })}
+          <Button onClick={() => setIsOpen(true)}>New Link</Button>
+        </SimpleGrid>
+      </Box>
 
-    <DarkModeSwitch />
-    <Footer>
-      <Text>Next ❤️ Chakra</Text>
-    </Footer>
-    <CTA />
-  </Container>
-)
+      <NewLinkModal isOpen={isOpen} setIsOpen={setIsOpen} />
 
-export default Index
+      <DarkModeSwitch />
+    </>
+  );
+};
+
+export default Index;
