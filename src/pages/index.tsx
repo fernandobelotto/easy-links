@@ -14,7 +14,7 @@ import { Container } from "../components/Container";
 import { DarkModeSwitch } from "../components/DarkModeSwitch";
 import NewLinkModal from "../components/NewLinkModal";
 import { useAppDispatch, useAppSelector } from "../store";
-import { LinkCard } from "./LinkCard";
+import { LinkCard } from "../components/LinkCard";
 
 const Index = () => {
   const [isOpen, setIsOpen] = useState(false);

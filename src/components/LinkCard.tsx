@@ -1,5 +1,5 @@
 import { Box, Link, Text } from "@chakra-ui/react";
-import DeletePopover from "../components/DeletePopover";
+import DeletePopover from "./DeletePopover";
 
 export function LinkCard(props) {
   return (
